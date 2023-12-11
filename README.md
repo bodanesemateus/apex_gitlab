@@ -10,7 +10,7 @@ Para este versionamento iremos utilizar a seguinte stack:
 - LiquidBase
 - Git
 
-O processo de versionamento acava sendo muito simples, o processo de CI/CD acaba entrando neste mesmo "pacote" de simplicidade.
+O processo de versionamento acaba sendo muito simples, o processo de CI/CD acaba entrando neste mesmo "pacote" de simplicidade.
 
 # Exportacao dos dados
 
