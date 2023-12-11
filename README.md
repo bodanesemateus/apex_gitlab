@@ -1,6 +1,6 @@
 # Versionamento e Deploy Apex com GitLab
 
-Versionamento do Oracle Apex no GIT ou GIT LAB.
+Versionamento do Oracle Apex no GitHub ou GitLab.
 
 Para este versionamento iremos utilizar a seguinte stack:
 
@@ -14,7 +14,7 @@ O processo de versionamento acaba sendo muito simples, o processo de CI/CD acaba
 
 # Exportacao dos dados
 
-Para exportar os dados do Apex, existem N's formatos, o melhor dele em um cenario de versionamento via GIT contendo CI/CD acaba sendo via SQLcl.
+Para exportar os dados do Apex, existem varios formatos, o melhor dele em um cenario de versionamento via GIT contendo CI/CD acaba sendo via SQLcl.
 
 Para isto, iremos subir um container no Docker utilizando SQLcl:
 
@@ -89,7 +89,7 @@ Apos exportar, na pasta onde criamos o volume teremos o seguinte resultado:
 ![image info](./export.png)
 
 
-Para realizar o versionamento no Git, eu particularmente uso o VSCode, pela simplicidade, para versionar basta eu ir ate ``` Source Control -> Selecionar os arquivos -> Adicionar uma menssagem -> Commit -> Sync os dados```
+Para realizar o versionamento no Git, utilizaremos o VSCode, pela simplicidade, para versionar basta eu ir ate ``` Source Control -> Selecionar os arquivos -> Adicionar uma menssagem -> Commit -> Sync os dados```
 
 ![image info](./commit.png)
 
