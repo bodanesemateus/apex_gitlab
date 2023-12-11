@@ -1,4 +1,4 @@
-# Versionamento Apex com GitLab
+# Versionamento e Deploy Apex com GitLab
 
 Versionamento do Oracle Apex no GIT ou GIT LAB.
 
