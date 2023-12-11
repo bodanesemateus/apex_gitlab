@@ -85,6 +85,7 @@ apex export -applicationid 110 -workspaceid 2044838282373994 -split -skipExportD
 ```
 
 Apos exportar, na pasta onde criamos o volume teremos o seguinte resultado:
+![image info](./export.png)
 
 
 Para realizar o versionamento no Git, eu particularmente uso o VSCode, pela simplicidade, para versionar basta eu ir ate ``` Source Control -> Selecionar os arquivos -> Adicionar uma menssagem -> Commit -> Sync os dados```
