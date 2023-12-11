@@ -94,3 +94,59 @@ Para realizar o versionamento no Git, eu particularmente uso o VSCode, pela simp
 ![image info](./commit.png)
 
 ![image info](./sync.png)
+
+A partir deste momento, ja temos nosso codigo versionado no Git, agora para verificar oque foi mudado, se deu conflito ou nao, para isto, usamos o Git Flow, onde o proprio Git fica responsavel por controlar Merge e  Conflitos.
+
+# Configuracao do CI/CD
+
+Para configurar o CI/CD (Continuous Integration/Continuous Delivery), iremos internamente no git, criar um arquivo chamado ```.gitlab-ci.yml``` onde ele sera o responsavel por realizar a ```instalacao``` no ambiente produtivo.
+
+```
+
+#  Author: Mateus G. Bodanese
+#  Since: 23/11/2023
+
+image: docker:dind
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_TLS_CERTDIR: ""
+  DOCKER_DRIVER: overlay2 
+  
+stages:
+    - deploy
+
+.job-template: &script_template
+  script:
+    - docker run -d --rm -it -v ./f110:/opt/oracle/sql_scripts container-registry.oracle.com/database/sqlcl:latest SEU_USUARIO/SUA_SENHA@DNS_DESTINO:1521/SERVICE_NAME @install.sql
+
+producao:
+  stage: deploy
+  environment:
+    name: producao
+  variables:
+    ENV: "producao"
+  only:
+    - tags
+  when: manual
+  <<: *script_template
+
+```
+
+Explicando brevemente o arquivo, usamos a image docker:dind que é uma imagem que possui o Docker dentro dela para permitir a execução de containers Docker durante o pipeline.
+
+Variables: Define variáveis de ambiente que podem ser usadas em todo o pipeline. Neste caso, estão configurando duas variáveis:
+```
+DOCKER_TLS_CERTDIR: Definida como uma string vazia, o que geralmente desabilita a autenticação TLS do Docker.
+DOCKER_DRIVER: Define o driver de armazenamento do Docker como "overlay2"
+```
+
+Como versionamos a pasta f110 no git, precisamos subir ela inteira para o SQLcl conseguir ler todos os arquivos, por isto usamos ```./f110```, ja o APEX no exporta um arquivo chamado ```install.sql``` que ele faz todo o ```deploy``` automaticamente para nos, sem precisamos rodar comando por comando.
+
+Portanto, o deploy acaba sendo muito simples, pois apenas precisamos subir o docker com SQLcl conectado na base de destino e mapear os arquivos necessarios.
+
+Porem, apenas criar o arquivo nao basta, precisamos dizer para o Git, que na pipeline ele precisa realizar o uso do arquivo que criamos, para isto, vamos ate ``` Settings -> CI/CD -> General pipelines ```, no campo CI/CD configuration file informamos o caminho do ```.gitlab-ci.yml```, como por exemplo ```my/path/.gitlab-ci.yml```.
+
+Pronto, agora basta realizar as configuracoes de pipeline, se ela sera automatica, manual e quais seriam as regras de versionamento.
